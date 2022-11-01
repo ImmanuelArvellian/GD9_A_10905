@@ -18,14 +18,17 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Keeps phone in light mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        square = findViewById(R.id.tv_square)
+
+        setUpSensorStuff()
     }
 
     private fun setUpSensorStuff() {
-        // Keeps phone in light mode
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        square = findViewById(R.id.tv_square)
-        setUpSensorStuff()
-
+        // Create the sensor manager
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         // Specify the sensor you want to listen to
@@ -62,7 +65,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             val color = if (upDown.toInt() == 0 && sides.toInt() == 0) Color.GREEN else Color.RED
             square.setBackgroundColor(color)
 
-            square.text = "up/down ${upDown.toInt()}\nleft/right${sides.toInt()}"
+            square.text = "up/down ${upDown.toInt()}\nleft/right ${sides.toInt()}"
         }
     }
 
@@ -74,5 +77,4 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         sensorManager.unregisterListener(this)
         super.onDestroy()
     }
-
 }
